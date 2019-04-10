@@ -4,27 +4,23 @@ const mongoose = require('mongoose')
 
 const app = express()
 
-// db setup
+// db
 mongoose.connect(require('./config/db'), { useNewUrlParser: true })
   .then(res => console.log('DB connected...'))
   .catch(err => console.log(err))
 
-// view engine setup
+// view engine
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'pug')
 
-// body parsing setup
+// body parsing
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(express.static(path.join(__dirname, 'public')))
 
+// routes
 app.use(require('./routes/index'))
-app.use(require('./routes/users'))
-
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404))
-})
+app.use(require('./routes/issues'))
 
 // // module.exports = app
 app.listen(process.env.PORT || 3000, () => console.log('Server is listening...'))
