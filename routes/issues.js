@@ -3,19 +3,21 @@ const router = express.Router()
 const Issue = require('../models/issue')
 
 // read all issues
-router.get('/api/issues', async (req, res, next) => {
-  const issues = await Issue.find()
-  res.json(issues)
+router.get('/api/issues', (req, res, next) => {
+  Issue.find()
+    .then(result => res.json(result))
+    .catch(error => res.json(error))
 })
 
 // read single issue
-router.get('/api/issues/:id', async (req, res, next) => {
-  const issue = await Issue.findById(req.params.id)
-  res.json(issue)
+router.get('/api/issues/:id', (req, res, next) => {
+  Issue.findById(req.params.id)
+    .then(result => res.json(result))
+    .catch(error => res.json(error))
 })
 
 // create issue
-router.post('/api/issues', async (req, res, next) => {
+router.post('/api/issues', (req, res, next) => {
   const issueObject = new Issue({
     reporter: req.body.reporter,
     assigned: req.body.assigned,
@@ -24,13 +26,14 @@ router.post('/api/issues', async (req, res, next) => {
     summary: req.body.summary,
     description: req.body.description
   })
-  const issue = await issueObject.save()
-  res.json(issue)
+  issueObject.save()
+    .then(result => res.json(result))
+    .catch(error => res.json(error))
 })
 
 // update single issue
-router.put('/api/issues/:id', async (req, res, next) => {
-  const issue = await Issue.findByIdAndUpdate(req.params.id, {
+router.put('/api/issues/:id', (req, res, next) => {
+  Issue.findByIdAndUpdate(req.params.id, {
     reporter: req.body.reporter,
     assigned: req.body.assigned,
     priority: req.body.priority,
@@ -38,13 +41,15 @@ router.put('/api/issues/:id', async (req, res, next) => {
     summary: req.body.summary,
     description: req.body.description
   }, {new: true})
-  res.json(issue)
+    .then(result => res.json(result))
+    .catch(error => res.json(error))
 })
 
 // delete single issue
-router.delete('/api/issues/:id', async (req, res, next) => {
-  const issue = await Issue.findByIdAndDelete(req.params.id)
-  res.json(issue)
+router.delete('/api/issues/:id', (req, res, next) => {
+  Issue.findByIdAndDelete(req.params.id)
+    .then(result => res.json(result))
+    .catch(error => res.json(error))
 })
 
 

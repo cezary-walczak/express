@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const IssueSchema = new mongoose.Schema({
+const UserSchema = new mongoose.Schema({
   reporter: {
     type: String,
     required: true,
@@ -29,4 +29,4 @@ const IssueSchema = new mongoose.Schema({
   }
 })
 
-module.exports = mongoose.model('Issue', IssueSchema)
+module.exports = mongoose.model('User', UserSchema)

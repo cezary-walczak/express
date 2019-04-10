@@ -4,8 +4,8 @@ const mongoose = require('mongoose')
 
 const app = express()
 
-// db
-mongoose.connect(require('./config/db'), { useNewUrlParser: true })
+// db connection
+mongoose.connect(require('./config/db'), { useNewUrlParser: true, useFindAndModify: false })
   .then(res => console.log('DB connected...'))
   .catch(err => console.log(err))
 
