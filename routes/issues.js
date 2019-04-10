@@ -3,21 +3,15 @@ const router = express.Router()
 const Issue = require('../models/issue')
 
 // read all issues
-router.get('/api/issues', (req, res, next) => {
-  Issue.find()
-    .then(result => res.json(result))
-    .catch(error => res.json(error))
+router.get('/api/issues', async (req, res, next) => {
+  res.json(await Issue.find())
 })
-
 // read single issue
-router.get('/api/issues/:id', (req, res, next) => {
-  Issue.findById(req.params.id)
-    .then(result => res.json(result))
-    .catch(error => res.json(error))
+router.get('/api/issues/:id', async (req, res, next) => {
+  res.json(await Issue.findById(req.params.id))
 })
-
 // create issue
-router.post('/api/issues', (req, res, next) => {
+router.post('/api/issues', async (req, res, next) => {
   const issueObject = new Issue({
     reporter: req.body.reporter,
     assigned: req.body.assigned,
@@ -26,31 +20,22 @@ router.post('/api/issues', (req, res, next) => {
     summary: req.body.summary,
     description: req.body.description
   })
-  issueObject.save()
-    .then(result => res.json(result))
-    .catch(error => res.json(error))
+  res.json(await issueObject.save())
 })
-
 // update single issue
-router.put('/api/issues/:id', (req, res, next) => {
-  Issue.findByIdAndUpdate(req.params.id, {
+router.put('/api/issues/:id', async (req, res, next) => {
+  res.json(await Issue.findByIdAndUpdate(req.params.id, {
     reporter: req.body.reporter,
     assigned: req.body.assigned,
     priority: req.body.priority,
     status: req.body.status,
     summary: req.body.summary,
     description: req.body.description
-  }, {new: true})
-    .then(result => res.json(result))
-    .catch(error => res.json(error))
+  }, {new: true}))
 })
-
 // delete single issue
-router.delete('/api/issues/:id', (req, res, next) => {
-  Issue.findByIdAndDelete(req.params.id)
-    .then(result => res.json(result))
-    .catch(error => res.json(error))
+router.delete('/api/issues/:id', async (req, res, next) => {
+  res.json(await Issue.findByIdAndDelete(req.params.id))
 })
-
 
 module.exports = router

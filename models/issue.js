@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const UserSchema = new mongoose.Schema({
+const IssueSchema = new mongoose.Schema({
   reporter: {
     type: String,
     required: true,
@@ -10,7 +10,6 @@ const UserSchema = new mongoose.Schema({
     type: String,
     maxlength: 255
   },
-
   priority: {
     type: String,
     required: true
@@ -19,7 +18,6 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-
   summary: {
     type: String,
     required: true
@@ -29,4 +27,4 @@ const UserSchema = new mongoose.Schema({
   }
 })
 
-module.exports = mongoose.model('User', UserSchema)
+module.exports = mongoose.model('Issue', IssueSchema)
