@@ -1,28 +1,32 @@
-var express = require('express');
-var path = require('path');
+const express = require('express')
+const path = require('path')
+const mongoose = require('mongoose')
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const app = express()
 
-var app = express();
+// db setup
+mongoose.connect(require('./config/db'), { useNewUrlParser: true })
+  .then(res => console.log('DB connected...'))
+  .catch(err => console.log(err))
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'views'))
+app.set('view engine', 'pug')
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, 'public')));
+// body parsing setup
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
+app.use(express.static(path.join(__dirname, 'public')))
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use(require('./routes/index'))
+app.use(require('./routes/users'))
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  next(createError(404));
-});
+  next(createError(404))
+})
 
-// module.exports = app;
+// // module.exports = app
 app.listen(process.env.PORT || 3000, () => console.log('Server is listening...'))
 
 
