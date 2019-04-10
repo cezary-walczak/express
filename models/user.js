@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const jwt = require('jsonwebtoken')
 
 const UserSchema = new mongoose.Schema({
   name: {
@@ -25,5 +26,9 @@ const UserSchema = new mongoose.Schema({
     type: Array
   }
 })
+
+UserSchema.methods.generateAuthToken = function() { // can't use arrow cause of 'this'
+  return jwt.sign({ _id: this._id, email: this.email }, this.password)
+}
 
 module.exports = mongoose.model('User', UserSchema)

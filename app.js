@@ -22,6 +22,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(require('./routes/index'))
 app.use(require('./routes/issues'))
 app.use(require('./routes/users'))
+app.use(require('./routes/auth'))
 app.use(require('./routes/errors'))
 
 // // module.exports = app
