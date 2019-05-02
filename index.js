@@ -1,8 +1,14 @@
+const env = require('dotenv').config()
 const path = require('path')
 const express = require('express')
+const mongoose = require('mongoose');
 
 const app = express()
-const db = require('./config/db');
+
+//  db connection
+mongoose.connect(process.env.DB_CONNECTION, { useNewUrlParser: true, useFindAndModify: false, useCreateIndex: true })
+.then(res => console.log('DB connected...'))
+.catch(err => console.log(err))
 
 // body parsing
 app.use(express.json())

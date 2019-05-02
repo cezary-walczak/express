@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken')
-const jwtConfig = require('../../config/jwt')
 
 const authVerify = (req, res, next) => {
   try {
@@ -7,7 +6,7 @@ const authVerify = (req, res, next) => {
     const token = req.headers.authorization.split(" ")[1] || req.body.token || req.query.token     // Bearer
     if (!token) return res.json({ auth: false, message: 'Brak tokenu' })
     // verify token and set decoded value to new fields of request
-    const decoded = jwt.verify(token, jwtConfig.secret)
+    const decoded = jwt.verify(token, process.env.JWT_SECRET)
     req.userToken = decoded
     console.log(req.userToken)
     next()
