@@ -1,29 +1,21 @@
-const express = require('express')
 const path = require('path')
-const mongoose = require('mongoose')
+const express = require('express')
 
 const app = express()
-
-// db connection
-mongoose.connect(require('./config/db'), { useNewUrlParser: true, useFindAndModify: false, useCreateIndex: true })
-  .then(res => console.log('DB connected...'))
-  .catch(err => console.log(err))
-
-// view engine
-app.set('views', path.join(__dirname, 'views'))
-app.set('view engine', 'pug')
+const db = require('./config/db');
 
 // body parsing
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(express.static(path.join(__dirname, 'public')))
 
+// view engine
+app.set('views', path.join(__dirname, 'views'))
+app.set('view engine', 'pug')
+
 // routes
-app.use(require('./routes/index'))
-app.use(require('./routes/issues'))
-app.use(require('./routes/users'))
-app.use(require('./routes/auth'))
-app.use(require('./routes/errors'))
+app.use(require('./api/auth/authController'))
+app.use(require('./api/users/userController'))
 
 // // module.exports = app
 app.listen(process.env.PORT || 3000, () => console.log('Server is listening...'))
